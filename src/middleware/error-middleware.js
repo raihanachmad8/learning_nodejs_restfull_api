@@ -3,12 +3,12 @@ import {ResponseError} from "../error/response-error.js";
 const errorMiddleware = async (err, req, res, next) => {
     if (!err) {
         next()
-        return
+        return;
     }
     if (err instanceof ResponseError) {
-        res.status(err.status.json({
+        res.status(err.status).json({
             error: err.message
-        })).end()
+        }).end()
     } else {
         res.status(500).json({
             error: err.message

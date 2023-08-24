@@ -2,6 +2,7 @@ import {validate} from "../validation/validation.js";
 import {registerUserValidation} from "../validation/user-validation.js";
 import {prismaClient} from "../app/database.js";
 import bcrypt from "bcrypt"
+import {ResponseError} from "../error/response-error.js";
 
 const register = async (request) => {
     const user = validate(registerUserValidation, request)
@@ -13,7 +14,7 @@ const register = async (request) => {
     })
 
     if (countUser === 1) {
-        throw new ResponseError(400, "Usernmae already exixts")
+        throw new ResponseError(400, "Username already exists")
     }
 
     user.password = await bcrypt.hash(user.password, 10)
@@ -22,7 +23,7 @@ const register = async (request) => {
         data: user,
         select: {
             username: true,
-            password: true
+            name: true
         }
     })
 
