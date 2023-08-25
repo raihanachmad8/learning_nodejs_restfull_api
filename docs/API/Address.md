@@ -40,7 +40,7 @@ Response Body Error :
 
 ```json
 {
-  "errors" : "Country is required" 
+  "error" : "Country is required" 
 }
 ```
 ---
@@ -83,7 +83,7 @@ Response Body Error :
 
 ```json
 {
-  "errors" : "Country is required"
+  "error" : "Country is required"
 }
 ```
 ---
@@ -114,7 +114,7 @@ Response Body Error :
 
 ```json
 {
-  "errors" : "contact is not found"
+  "error" : "contact is not found"
 }
 ```
 ---
@@ -155,7 +155,7 @@ Response Body Error :
 
 ```json
 {
-  "errors" : "contact is not found"
+  "error" : "contact is not found"
 }
 ```
 ---
@@ -179,6 +179,6 @@ Response Body Error :
 
 ```json
 {
-  "errors" : "address is not found"
+  "error" : "address is not found"
 }
 ```

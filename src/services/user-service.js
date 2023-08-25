@@ -89,7 +89,7 @@ const get = async (username) => {
     })
 
     if (!user) {
-        throw new ResponseError('401', "user not found")
+        throw new ResponseError('404', "user not found")
     }
 
     return user
@@ -105,7 +105,7 @@ const update = async (request) => {
     })
 
     if (totalUserInDB !== 1) {
-        throw new ResponseError('401', 'user not found')
+        throw new ResponseError('404', 'user not found')
     }
 
     const data = {}
@@ -140,7 +140,7 @@ const logout = async (username) => {
     })
 
     if (!user) {
-        throw new ResponseError(401,'user is not found')
+        throw new ResponseError(404,'user is not found')
     }
 
     return prismaClient.user.update({

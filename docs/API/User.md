@@ -115,7 +115,7 @@ Request Body Success:
 Response Body Failed:
 ```json
 {
-  "errors" : "Unauthorized"
+  "error" : "Unauthorized"
 }
 ```
 ---
@@ -135,7 +135,7 @@ Response Body Success:
 Response Body Failed:
 ```json
 {
-  "errors" : "Unauthorized"
+  "error" : "Unauthorized"
 }
 ```
 ---

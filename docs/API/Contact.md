@@ -38,7 +38,7 @@ Response Body Error :
 
 ```json
 {
-  "errors" : "Email is not valid format"
+  "error" : "Email is not valid format"
 }
 ```
 ---
@@ -79,7 +79,7 @@ Response Body Error :
 
 ```json
 {
-  "errors" : "Email is not valid format"
+  "error" : "Email is not valid format"
 }
 ```
 ---
@@ -109,7 +109,7 @@ Response Body Error :
 
 ```json
 {
-  "errors" : "Contact is not found"
+  "error" : "Contact is not found"
 }
 ```
 ---
@@ -159,7 +159,7 @@ Response Body Success :
 Response Body Error :
 ```json
 {
-  "errors" : "Contact is not found"
+  "error" : "Contact is not found"
 }
 ```
 ---
@@ -183,6 +183,6 @@ Response Body Error :
 
 ```json
 {
-  "errors" : "Contact is not found"
+  "error" : "Contact is not found"
 }
 ```
