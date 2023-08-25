@@ -1,6 +1,7 @@
 import {app} from "../src/app/web.js";
 import supertest from "supertest";
-import {createTestUser, removeTestUser} from "./test-util.js";
+import {createTestUser, getTestUser, removeTestUser} from "./test-util.js";
+import bcrypt from "bcrypt";
 
 describe('POST /api/users', () => {
     afterEach(async () => {
@@ -110,5 +111,69 @@ describe('GET /api/users/current', () => {
         expect(result.status).toBe(401)
         expect(result.body.error).toBeDefined()
     })
+})
+
+describe('PATCH /api/users/current', () => {
+    beforeEach(async () => {
+        await createTestUser()
+    })
+
+    afterEach(async () => {
+        await removeTestUser()
+    })
+
+    it ('should can update user', async () => {
+        const result = await supertest(app)
+            .patch('/api/users/current')
+            .set('Authorization', 'test')
+            .send({
+                name: "raihan",
+                password: "1234"
+            })
+
+        expect(result.status).toBe(200)
+        expect(result.body.data.username).toBe('test')
+        expect(result.body.data.name).toBe('raihan')
+
+        const user = await getTestUser()
+        expect(await bcrypt.compare('1234', user.password)).toBe(true)
+    })
+    it ('should can update password user', async () => {
+        const result = await supertest(app)
+            .patch('/api/users/current')
+            .set('Authorization', 'test')
+            .send({
+                password: "1234"
+            })
+
+        const user = await getTestUser()
+        expect(await bcrypt.compare('1234', user.password)).toBe(true)
+    })
+    it ('should can update name user', async () => {
+        const result = await supertest(app)
+            .patch('/api/users/current')
+            .set('Authorization', 'test')
+            .send({
+                name: "raihan"
+            })
+
+        expect(result.status).toBe(200)
+        expect(result.body.data.username).toBe('test')
+        expect(result.body.data.name).toBe('raihan')
+    })
+
+
+    it ('should reject if request not valid', async () => {
+        const result = await supertest(app)
+            .patch('/api/users/current')
+            .set('Authorization', 'wrong')
+            .send({
+                name: "raihan"
+            })
+
+        expect(result.status).toBe(401)
+        expect(result.body.error).toBeDefined()
+    })
+
 
 })
