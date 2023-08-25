@@ -1,5 +1,4 @@
 import {ResponseError} from "../error/response-error.js";
-import {logger} from "../app/logging.js";
 
 const errorMiddleware = async (err, req, res, next) => {
     if (!err) {
