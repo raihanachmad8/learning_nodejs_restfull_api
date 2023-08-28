@@ -16,6 +16,7 @@ userRouter.post('/api/contacts', ContactController.create)
 userRouter.get('/api/contacts/:contactId', ContactController.get)
 userRouter.put('/api/contacts/:contactId', ContactController.update)
 userRouter.delete('/api/contacts/:contactId', ContactController.remove)
+userRouter.get('/api/contacts', ContactController.search)
 
 export {
     userRouter

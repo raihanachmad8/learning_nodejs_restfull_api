@@ -1,7 +1,7 @@
 import {validate} from "../validation/validation.js";
 import {
     createContactValidation,
-    getContactValidation,
+    getContactValidation, searchContactValidate,
     updateContactValidation
 } from "../validation/contact-validation.js";
 import {prismaClient} from "../app/database.js";
@@ -99,9 +99,80 @@ const remove = async (user, contactId) => {
         }
     })
 }
+
+const search = async (user, request) => {
+    request = validate(searchContactValidate, request)
+    const skip = (request.page - 1) * request.size
+
+    const filters = []
+    filters.push({
+        username: user.username
+    })
+    if(request.name) {
+        filters.push(
+            {
+                OR: [
+                    {
+                        firstname: {
+                            contains: request.name
+                        }
+                    },
+                    {
+                        lastname: {
+                            contains: request.name
+                        }
+                    }
+                ]
+            }
+        )
+    }
+
+    if (request.email) {
+        filters.push(
+            {
+                email: {
+                    contains: request.email
+                }
+            }
+        )
+    }
+
+    if (request.phone) {
+        filters.push(
+            {
+                phone: {
+                    contains: request.phone
+                }
+            }
+        )
+    }
+    const contact = await prismaClient.contact.findMany({
+        where: {
+            AND: filters
+        },
+        take: request.size,
+        skip: skip
+    })
+
+    const totalItemCount = await prismaClient.contact.count({
+        where: {
+            AND: filters
+        }
+    })
+
+    return {
+        data: contact,
+        paging: {
+            page: request.page,
+            total_item: totalItemCount,
+            total_page: Math.ceil(totalItemCount / request.size)
+        }
+    }
+}
 export default {
     create,
     get,
     update,
-    remove
+    remove,
+    search
 }
