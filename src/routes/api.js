@@ -23,6 +23,10 @@ userRouter.get('/api/contacts', ContactController.search)
 userRouter.post('/api/contacts/:contactId/addresses', AddressController.create)
 userRouter.get('/api/contacts/:contactId/addresses/:addressId', AddressController.get)
 userRouter.put('/api/contacts/:contactId/addresses/:addressId', AddressController.update)
+userRouter.delete('/api/contacts/:contactId/addresses/:addressId', AddressController.remove)
+userRouter.get('/api/contacts/:contactId/addresses/', AddressController.list)
+
+
 export {
     userRouter
 }
