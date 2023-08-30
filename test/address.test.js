@@ -79,7 +79,7 @@ describe('POST /api/contacts/:contactId/addresses', () => {
 
 })
 
-describe('GET /api/contacts/:contactId/addresses/addressId', () => {
+describe('GET /api/contacts/:contactId/addresses/:addressId', () => {
     beforeEach(async () => {
         await createTestUser();
         await createManyTestContact();
@@ -130,4 +130,91 @@ describe('GET /api/contacts/:contactId/addresses/addressId', () => {
 
         expect(result.status).toBe(404);
     });
+})
+
+
+describe('PUT /api/contacts/:contactId/addresses/:addressId', () => {
+    beforeEach(async () => {
+        await createTestUser();
+        await createManyTestContact();
+        await createTestAddress()
+    })
+
+    afterEach(async () => {
+        await removeAllTestAddress()
+        await removeTestAllContact();
+        await removeTestUser();
+    })
+
+    it('should can update address data', async () => {
+        const testContact = await getTestContact()
+        const testAddress = await getTestAddress()
+
+        const result = await supertest(app)
+            .put('/api/contacts/' + testContact.id + '/addresses/' + testAddress.id)
+            .set('Authorization', 'test')
+            .send({
+                street: 'new street',
+                city: 'new city',
+                province: 'new province',
+                country: 'new country',
+                postal_code: 'new 1234',
+            })
+
+        expect(result.status).toBe(200)
+        expect(result.body.data.street).toBe('new street')
+        expect(result.body.data.city).toBe('new city')
+        expect(result.body.data.province).toBe('new province')
+        expect(result.body.data.country).toBe('new country')
+        expect(result.body.data.postal_code).toBe('new 1234')
+    })
+    it('should must invalid update address data', async () => {
+        const testContact = await getTestContact()
+        const testAddress = await getTestAddress()
+
+        const result = await supertest(app)
+            .put('/api/contacts/' + testContact.id + '/addresses/' + testAddress.id)
+            .set('Authorization', 'salah')
+            .send({
+                street: 'new street',
+                city: 'new city',
+                province: 'new province',
+                country: 'new country',
+                postal_code: 'new 1234',
+            })
+
+        expect(result.status).toBe(401)
+    })
+    it('should reject if update address data not valid', async () => {
+        const testContact = await getTestContact()
+        const testAddress = await getTestAddress()
+
+        const result = await supertest(app)
+            .put('/api/contacts/' + testContact.id + '/addresses/' + testAddress.id)
+            .set('Authorization', 'test')
+            .send({
+                street: 'new street',
+                city: 'new city',
+                province: 'new province'
+            })
+
+        expect(result.status).toBe(400)
+    })
+    it('should reject if identity not found', async () => {
+        const testContact = await getTestContact()
+        const testAddress = await getTestAddress()
+
+        const result = await supertest(app)
+            .put('/api/contacts/' + (testContact.id + 1) + '/addresses/' + (testAddress.id + 1))
+            .set('Authorization', 'test')
+            .send({
+                street: 'new street',
+                city: 'new city',
+                province: 'new province',
+                country: 'new country',
+                postal_code: 'new 1234',
+            })
+
+        expect(result.status).toBe(404)
+    })
 })

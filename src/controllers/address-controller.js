@@ -1,4 +1,5 @@
 import addressService from "../services/address-service.js";
+import AddressService from "../services/address-service.js";
 
 const create = async (req, res, next) => {
     try {
@@ -28,6 +29,23 @@ const get = async (req, res, next) => {
         next(e)
     }
 }
+
+const update = async (req, res, next) => {
+    try {
+        const user = req.user
+        const contactId = req.params.contactId
+        const addressId = req.params.addressId
+        const request = req.body
+        request.id = addressId
+
+        const result = await AddressService.update(user, contactId, addressId, request)
+        res.status(200).json({
+            data: result
+        })
+    } catch (e) {
+        next(e)
+    }
+}
 export default {
-    create, get
+    create, get, update
 }
