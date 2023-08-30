@@ -85,6 +85,6 @@ npm install --save-dev @types/express @types/bcrypt @types/uuid @types/jest @typ
 
 
 ## API SPEC
-- [User Api](https://www.github.com/raihanachmad8/nodejs-restfull-api/docs/API/User.md)
-- [Address Api](https://www.github.com/raihanachmad8/nodejs-restfull-api/docs/API/Address.md)
-- [Contact Api](https://www.github.com/raihanachmad8/nodejs-restfull-api/docs/API/Contact.md)
+- [User Api](https://github.com/raihanachmad8/learning_nodejs_restfull_api/blob/main/docs/API/User.md)
+- [Address Api](https://github.com/raihanachmad8/learning_nodejs_restfull_api/blob/main/docs/API/Address.md)
+- [Contact Api](https://github.com/raihanachmad8/learning_nodejs_restfull_api/blob/main/docs/API/Contact.md)
